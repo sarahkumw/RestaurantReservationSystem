@@ -2,14 +2,14 @@ Restaurant Reservation System
 
 To run app locally:
 
-fork and clone repository
+- fork and clone repository
+- cd into back-end, run npm install, run npm start
+- cd into front-end, run npm install, run npm start
 
-cd into back-end, run npm install, run npm start
-cd into front-end, run npm install, run npm start
 To see deployed app on Heroku:
 
-use backend link https://rest-reservation-backend-147.herokuapp.com/
-use client link https://rest-reservation-client-147.herokuapp.com/
+- use backend link https://rest-reservation-backend-147.herokuapp.com/
+- use client link https://rest-reservation-client-147.herokuapp.com/
 
 
 
