@@ -3,6 +3,7 @@ import { listReservations, listTables, deleteTable, createTable } from "../utils
 import { previous, next } from "../utils/date-time";
 import ErrorAlert from "../layout/ErrorAlert";
 import ListReservations from "../reservations/ListReservations";
+import { updateReservationStatus } from "../utils/api";
 import useQuery from "../utils/useQuery"
 
 function Dashboard({ date }) {
@@ -11,7 +12,6 @@ function Dashboard({ date }) {
   const [tables, setTables] = useState([]);
   const [tablesError, setTablesError] = useState(null);
   const [currentDate, setCurrentDate] = useState(date);
-  //const [currentDateAsString, setCurrentDateAsString] = useState('');
   const [currentDateAndTime, setCurrentDateAndTime] = useState(new Date());
   const query = useQuery();
 
@@ -62,6 +62,19 @@ function Dashboard({ date }) {
       .catch(setTablesError)
     }
   }
+
+  const cancelRes = (reservation) => {
+    const abortController = new AbortController();
+    if (window.confirm("Do you want to cancel this reservation? This cannot be undone.")){
+        const newStatus = {
+            reservation_id: reservation.reservation_id,
+            status: "cancelled"
+        }
+        updateReservationStatus(newStatus, abortController.signal)
+        .then(() => loadDashboard())
+        .catch(setReservationsError)
+    }
+}
   
   
 
@@ -102,7 +115,7 @@ function Dashboard({ date }) {
           <h4 className="mb-0">Reservations</h4>
           <hr />
           <ErrorAlert error={reservationsError} />
-          <ListReservations reservations={reservations} />
+          <ListReservations reservations={reservations} cancelRes={cancelRes} />
         </div>
         <div className="col">
           <h4 className="mb-0">Tables</h4>

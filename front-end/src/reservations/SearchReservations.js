@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { listReservations } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 import ListReservations from "./ListReservations";
+import { updateReservationStatus } from "../utils/api";
 
 
 function SearchReservations(){
@@ -19,6 +20,19 @@ function SearchReservations(){
         .catch(setReservationsError);
         return () => abortController.abort();
     }
+
+    const cancelRes = (reservation) => {
+        const abortController = new AbortController();
+        if (window.confirm("Do you want to cancel this reservation? This cannot be undone.")){
+            const newStatus = {
+                reservation_id: reservation.reservation_id,
+                status: "cancelled"
+            }
+            updateReservationStatus(newStatus, abortController.signal)
+            .then(() => loadReservations())
+            .catch(setReservationsError)
+        }
+    };
 
     const handleChange = ({ target }) => {
         return setQuery(target.value);
@@ -43,8 +57,7 @@ function SearchReservations(){
             </div>
             <div>
                 <ErrorAlert error={reservationsError} />
-                {reservations.length === 0 && <ErrorAlert error={{error: true, message: 'No reservations found'}} />}
-                <ListReservations reservations={reservations} />
+                <ListReservations reservations={reservations} cancelRes={cancelRes} />
             </div>
         </div>
     )

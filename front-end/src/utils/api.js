@@ -31,6 +31,7 @@ headers.append("Content-Type", "application/json");
  */
 async function fetchJson(url, options, onCancel) {
   try {
+    
     const response = await fetch(url, options);
 
     if (response.status === 204) {

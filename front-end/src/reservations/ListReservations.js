@@ -1,22 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { updateReservationStatus } from "../utils/api";
 
 
 
-function ListReservations({ reservations }){
-    
-    const cancelRes = (reservation) => {
-        const abortController = new AbortController();
-        if (window.confirm("Do you want to cancel this reservation? This cannot be undone.")){
-            const newStatus = {
-                reservation_id: reservation.reservation_id,
-                status: "cancelled"
-            }
-            updateReservationStatus(newStatus, abortController.signal)
-        }
-    }
-    
+
+function ListReservations({ reservations, cancelRes }){
+  if(reservations.length === 0) {
+    return (
+      <p>No reservations found</p>
+    )
+  }  
+  else { 
     return reservations.map((reservation) => {
         let seatButtons = null;
         if(reservation.status === "booked"){
@@ -46,6 +40,7 @@ function ListReservations({ reservations }){
         </div>
         )
       });
+  }
 }
 
 

@@ -32,12 +32,13 @@ function SeatReservation(){
     
     const handleChange = ({ target }) => {
         setTableToUpdate(target.value);
+        console.log(tableToUpdate)
     };
 
     const submitHandler = (event) => {
         event.preventDefault();
         const updatedTable = {
-            table_id: tableToUpdate,
+            table_id: parseInt(tableToUpdate),
             reservation_id: reservation.reservation_id
         }
         updateTable(updatedTable)
@@ -58,7 +59,7 @@ function SeatReservation(){
                 <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
                     <label htmlFor="table-select">Table number:</label>
                     <select name="table_id" id="table-select" style={{marginLeft: "10px"}} onChange={handleChange}>
-                        <option value="DEFAULT" disabled>--Please choose a table--</option>
+                        <option value="DEFAULT" selected disabled>--Please choose a table--</option>
                         {tableOptions}
                     </select>
                 </div>
