@@ -33,15 +33,15 @@ describe("US-02 - Create reservation on a future, working date - E2E", () => {
 
   describe("/reservations/new page", () => {
     beforeEach(async () => {
-      await page.type("input[name=first_name]", "John");
-      await page.type("input[name=last_name]", "Doe");
-      await page.type("input[name=mobile_number]", "1234567890");
-      await page.type("input[name=people]", "3");
+      await page.type("input[name='first_name']", "John");
+      await page.type("input[name='last_name']", "Doe");
+      await page.type("input[name='mobile_number']", "1234567890");
+      await page.type("input[name='people']", "3");
     });
 
     test("displays an error message if the date of the reservation occurs in the past", async () => {
-      await page.type("input[name=reservation_date]", "12242020");
-      await page.type("input[name=reservation_time]", "05:30PM");
+      await page.type("input[name='reservation_date']", "12242020");
+      await page.type("input[name='reservation_time']", "05:30PM");
 
       await page.screenshot({
         path: ".screenshots/us-02-reservation-is-future-before.png",
